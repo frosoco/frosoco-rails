@@ -1,0 +1,7 @@
+<%= form_tag("/user/profile", method: "post") do %>
+  <input type="text" name="first_name" class="form-control" value="<%= current_user.first_name %>" />
+  <input type="text" name="last_name" class="form-control" value="<%= current_user.last_name %>" />
+  <input type="email" name="email" class="form-control" value="<%= current_user.email %>" />
+  <input type="password" name="password" class="form-control" />
+  <%= submit_tag("Modify") %>
+<% end %>

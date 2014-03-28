@@ -1,0 +1,5 @@
+<%= form_tag("/user/login", method: "post") do %>
+  <input type="email" name="email" class="form-control" />
+  <input type="password" name="password" class="form-control" />
+  <%= submit_tag("Login") %>
+<% end %>
