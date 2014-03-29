@@ -17,6 +17,10 @@ Campfirehq::Application.routes.draw do
   get 'user/profile' => 'user#profile'
   post 'user/profile' => 'user#profile'
 
+  get 'user/show/:id' => 'user#show'
+
+  post 'post/create' => 'post#create'
+
   # You can have the root of your site routed with "root"
   root 'user#feed'
 

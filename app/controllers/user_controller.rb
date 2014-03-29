@@ -63,7 +63,7 @@ class UserController < ApplicationController
 
 			else
 
-				user = User.new(:email => email, :password => password)
+				user = User.new(:email => email, :password => password, :first_name => '', :last_name => '')
 				user.save
 
 				flash.now[:notice] = 'Registration successful, log in now.'
@@ -91,13 +91,27 @@ class UserController < ApplicationController
 			current_user.first_name = params[:first_name]
 			current_user.last_name = params[:last_name]
 			current_user.email = params[:email]
-			current_user.password = params[:password]
+			if params[:password] == params[:confirm_password]
+				current_user.password = params[:password]
+			end
+			if params[:avatar]
+				current_user.avatar = params[:avatar]
+			end
+			current_user.save(validate: false)
 
 		end
 
 	end
 
+	def show
+
+		@user = User.find(params[:id])
+
+	end
+
 	def feed
+
+		@activities = Activity.all.order(created_at: :desc)
 
 		@users = User.all
 

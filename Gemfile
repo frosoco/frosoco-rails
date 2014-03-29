@@ -41,6 +41,15 @@ gem 'bcrypt', '~> 3.1.7'
 # We use Devise to help us out with authentication
 gem 'devise'
 
+# ImageMagick for Ruby
+gem 'rmagick'
+
+# File uploads with carrierwave
+gem 'carrierwave'
+
+# Font Awesome
+gem 'font-awesome-sass'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
