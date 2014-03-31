@@ -28,13 +28,11 @@ class PostController < ApplicationController
 		post.save
 
 		# Then add it to the news feed
-		activity = Activity.new(:content_type => 'post', :content_id => post.id, :group_id => group.id).save
+		activity = Activity.new(:content_type => 'post', :content_id => post.id, :group_id => group.id)
+		activity.save
 
 		# Render a response as JSON
-		# render :json => post
-
-		# Redirect to the feed
-		redirect_to :controller => 'group', :id => params[:group]
+		render :json => activity
 
 	end
 

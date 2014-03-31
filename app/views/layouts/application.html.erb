@@ -52,6 +52,9 @@
 </script>
 
 <script id="bb-feed" type="text/template">
+<form id="add-post" action="/group/<@= group @>/add" method="post">
+  <input id="add-post-content" type="text" name="content" class="form-control" />
+</form>
 <div id="feed-items"></div>
 </script>
 
@@ -95,8 +98,6 @@ $(function() {
 
   });
 
-  var activities = new ActivityCollection;
-
   var User = Backbone.Model.extend({
 
   });
@@ -115,8 +116,10 @@ $(function() {
       // Get the corresponding post object
       $.get('/post/' + this.options.post, function(data) {
 
+        // Set the model to our JSON response
         _this.model = data;
 
+        // Render the view
         _this.render();
 
       });
@@ -125,6 +128,7 @@ $(function() {
 
     render: function() {
 
+      // TODO: Use el before the prepend
       $('#feed-items').prepend(this.template(this.model));
 
     }
@@ -149,6 +153,12 @@ $(function() {
       // Create a new ActvityCollection for the feed
       this.activityCollection = new ActivityCollection();
 
+      this.activityCollection.on('add', function(model) {
+
+        _this.renderActivity(model.get('content_type'), model.get('content_id'));
+
+      });
+
       // Set the URL for the collection
       this.activityCollection.url = '/group/' + this.options.group + '/feed';
 
@@ -164,15 +174,8 @@ $(function() {
             // Get the model by the index
             var model = _this.activityCollection.models[index];
 
-            // Check the attributes
-            if (model.attributes.content_type == 'post') {
-
-              // Render a post view
-              var postView = new PostView({
-                post: model.attributes.content_id
-              });
-
-            }
+            // Render the activity model
+            _this.renderActivity(model.attributes.content_type, model.attributes.content_id);
 
           }
 
@@ -184,7 +187,21 @@ $(function() {
 
     render: function() {
 
-      $(this.el).html(this.template(this.activityCollection));
+      $(this.el).html(this.template(this.options));
+
+    },
+
+    renderActivity: function(content_type, content_id) {
+
+      // Check the attributes
+      if (content_type == 'post') {
+
+        // Render a post view
+        var postView = new PostView({
+          post: content_id
+        });
+
+      }
 
     }
 
@@ -196,15 +213,22 @@ $(function() {
 
     events: {
 
+      'submit #add-post': 'addPost', 
+
     },
 
     initialize: function() {
 
-      // Get an initial group reference number
-      this.group = '<%= current_user.groups.first.id %>'
+      // Get a reference to the parent object
+      var _this = this;
 
-      // Render the first feed
-      this.renderFeed();
+      // Get an initial group reference number
+      this.group = '<%= current_user.groups.first.id %>';
+
+      // Create the feedView
+      this.feedView = new FeedView({
+        group: _this.group
+      });
 
     },
 
@@ -214,21 +238,28 @@ $(function() {
 
     renderFeed: function() {
 
-      // Get a reference to the parent application
-      var _this = this;
-
-      // Render a FeedView for this App instance
-      this.feedView = new FeedView({
-        group: _this.group
-      });
-
     },
 
-    addPost: function() {
+    addPost: function(e) {
 
+      // Reference to the parent object
       var _this = this;
 
+      // Get the content from the text box
+      var content = $('#add-post-content').val();
 
+      // Create a POST request
+      $.post('/post/create', { group: this.group, content: content }, function(response) {
+
+        console.log(response);
+
+        // Refresh the data feed with the new activity
+        _this.feedView.activityCollection.add(response);
+
+      });
+
+      // Prevent the default action
+      e.preventDefault();
 
     },
 
