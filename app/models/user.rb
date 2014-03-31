@@ -3,8 +3,12 @@ require 'bcrypt'
 # The User is the base profile
 class User < ActiveRecord::Base
 
+  # A user can make many posts
   has_many :posts
-  has_and_belongs_to_many :activities
+  has_many :comments
+
+  # Users can be in many groups and groups have many users
+  has_and_belongs_to_many :groups
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

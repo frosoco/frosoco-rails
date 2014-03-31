@@ -50,6 +50,9 @@ gem 'carrierwave'
 # Font Awesome
 gem 'font-awesome-sass'
 
+# Backbone.js
+gem 'rails-backbone'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

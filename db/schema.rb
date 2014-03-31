@@ -11,19 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329170227) do
+ActiveRecord::Schema.define(version: 20140330135808) do
 
   create_table "activities", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "group_id"
     t.string   "content_type"
     t.string   "content_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "comments", force: true do |t|
+    t.integer  "user_id"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.string   "location"
+    t.text     "description"
+    t.datetime "start"
+    t.datetime "end"
+    t.integer  "capacity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.string   "identifier"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "groups_users", id: false, force: true do |t|
+    t.integer "user_id",  null: false
+    t.integer "group_id", null: false
+  end
+
   create_table "posts", force: true do |t|
     t.integer  "user_id"
-    t.string   "content"
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,6 +63,7 @@ ActiveRecord::Schema.define(version: 20140329170227) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "sunetid"
+    t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",                  default: "", null: false

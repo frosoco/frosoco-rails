@@ -19,7 +19,26 @@ Campfirehq::Application.routes.draw do
 
   get 'user/show/:id' => 'user#show'
 
+  get 'post/:id' => 'post#index'
+
   post 'post/create' => 'post#create'
+
+
+  get 'group/create' => 'group#create'
+  post 'group/create' => 'group#create'
+
+  get 'group/:id' => 'group#index'
+
+  get 'group/:id/feed' => 'group#feed'
+
+  get 'group/:id/modify' => 'group#modify'
+  post 'group/:id/modify' => 'group#modify'
+
+  get 'group/:id/add' => 'group#add'
+  post 'group/:id/add' => 'group#add'
+
+
+
 
   # You can have the root of your site routed with "root"
   root 'user#feed'

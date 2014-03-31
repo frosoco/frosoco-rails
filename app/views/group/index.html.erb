@@ -1,0 +1,25 @@
+<%= form_tag("/post/create", method: "post") do %>
+<input type="text" name="content" class="form-control" placeholder="Send a blast to your group" />
+<input type="hidden" name="group" value="<%= @group.id %>" />
+<% end %>
+<% @group.activities.each do |activity| %>
+	<div class="feed-item">
+	<% if activity.content_type == 'post' %>
+		<% post = Post.find(activity.content_id) %>
+		<div class="feed-avatar">
+			<%= image_tag(post.user.avatar, :alt => "Avatar", :class => "img-circle") %>
+		</div>
+		<div class="feed-body">
+			<div class="feed-author"><strong><a href="/user/show/<%= post.user.id %>"><%= post.user.full_name %></a></strong></div>
+			<div class="feed-time"><%= post.created_at.strftime("%B %e, %Y") %></div>
+			<div class="feed-content"><%= post.content %></div>
+			<div class="feed-social">
+				<!--<div class="feed-likes"></div>
+				<%= form_tag("/comment/create", method: "post") do %>
+				<input type="text" name="new-comment" class="form-control" />
+				<% end %>-->
+			</div>
+		</div>
+	<% end %>
+	</div>
+<% end %>

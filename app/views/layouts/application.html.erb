@@ -1,33 +1,257 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>CampfireHQ</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
-<body>
 
+<body>
 <!-- Fixed navbar -->
 <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="/">Project name</a>
+      <a class="navbar-brand" href="/">CampfireHQ</a>
     </div>
   </div>
 </div>
 
 <main>
   <div class="container">
-    <% if flash[:notice] %>
-      <div class="notice"><%= flash[:notice] %></div>
-    <% end %>
-    <% if flash[:alert] %>
-      <div class="alert"><%= flash[:alert] %></div>
-    <% end %>
-    <%= yield %>
+    <div class="row">
+      <div class="col-xs-9">
+        <div id="feed">
+        </div>
+      </div>
+      <div id="sidebar" class="col-xs-3">
+        <div id="sidebar-profile">
+          <div class="sidebar-name"><strong><a href="/user/show/<%= current_user.id %>"><%= current_user.full_name %></a></strong></div>
+          <div class="sidebar-editprofile"><a href="/user/profile">Edit Profile</a> | <a href="/user/logout">Logout</a></div>
+        </div>
+        <div id="sidebar-actions">
+        </div>
+        <div id="sidebar-groups">
+        </div>
+      </div>
+    </div>
   </div>
 </main>
 
+<script id="bb-sidebar-profile" type="text/template">
+
+</script>
+
+<script id="bb-sidebar-actions" type="text/template">
+
+</script>
+
+<script id="bb-sidebar-groups" type="text/template">
+
+</script>
+
+<script id="bb-feed" type="text/template">
+<div id="feed-items"></div>
+</script>
+
+<script id="bb-feed-post" type="text/template">
+<div class="feed-item">
+  <div class="feed-avatar">
+    <img src="<@= avatar @>" class="img-circle" />
+  </div>
+  <div class="feed-body">
+    <div class="feed-author"><strong><a href="#"><@= name @></a></strong></div>
+    <div class="feed-time"><@= timestamp @></div>
+    <div class="feed-content"><@= content @></div>
+    <div class="feed-social">
+    </div>
+  </div>
+</div>
+</script>
+
+<script>
+
+$(function() {
+
+  // Eliminate conflicts with Rails
+  _.templateSettings = {
+      interpolate: /\<\@\=(.+?)\@\>/gim,
+      evaluate: /\<\@(.+?)\@\>/gim,
+      escape: /\<\@\-(.+?)\@\>/gim
+  };
+
+  var Post = Backbone.Model.extend({
+
+  });
+
+  var Activity = Backbone.Model.extend({
+
+  });
+
+  var ActivityCollection = Backbone.Collection.extend({
+
+    model: Activity
+
+  });
+
+  var activities = new ActivityCollection;
+
+  var User = Backbone.Model.extend({
+
+  });
+
+  var PostView = Backbone.View.extend({
+
+    el: $('#feed-items'),
+
+    template: _.template($('#bb-feed-post').html()),
+
+    initialize: function() {
+
+      // Get a pointer to the parent object
+      var _this = this;
+
+      // Get the corresponding post object
+      $.get('/post/' + this.options.post, function(data) {
+
+        _this.model = data;
+
+        _this.render();
+
+      });
+
+    },
+
+    render: function() {
+
+      $('#feed-items').prepend(this.template(this.model));
+
+    }
+
+  });
+
+  var FeedView = Backbone.View.extend({
+
+    el: $('#feed'),
+
+    template: _.template($('#bb-feed').html()),
+
+    events: {
+
+    },
+
+    initialize: function() {
+
+      // Get a pointer to the parent object
+      var _this = this;
+
+      // Create a new ActvityCollection for the feed
+      this.activityCollection = new ActivityCollection();
+
+      // Set the URL for the collection
+      this.activityCollection.url = '/group/' + this.options.group + '/feed';
+
+      // Attempt to fetch objects into the ActivityCollection
+      this.activityCollection.fetch({
+
+        success: function() {
+          
+          _this.render();
+
+          for (var index in _this.activityCollection.models) {
+
+            // Get the model by the index
+            var model = _this.activityCollection.models[index];
+
+            // Check the attributes
+            if (model.attributes.content_type == 'post') {
+
+              // Render a post view
+              var postView = new PostView({
+                post: model.attributes.content_id
+              });
+
+            }
+
+          }
+
+        }
+
+      });
+
+    },
+
+    render: function() {
+
+      $(this.el).html(this.template(this.activityCollection));
+
+    }
+
+  });
+
+  var AppView = Backbone.View.extend({
+
+    el: $('main'),
+
+    events: {
+
+    },
+
+    initialize: function() {
+
+      // Get an initial group reference number
+      this.group = '<%= current_user.groups.first.id %>'
+
+      // Render the first feed
+      this.renderFeed();
+
+    },
+
+    render: function() {
+
+    },
+
+    renderFeed: function() {
+
+      // Get a reference to the parent application
+      var _this = this;
+
+      // Render a FeedView for this App instance
+      this.feedView = new FeedView({
+        group: _this.group
+      });
+
+    },
+
+    addPost: function() {
+
+      var _this = this;
+
+
+
+    },
+
+    likePost: function() {
+
+      var _this = this;
+
+    },
+
+    addComment: function() {
+
+      var _this = this;
+
+    }
+
+  });
+
+  var App = new AppView;
+
+});
+
+</script>
+
 </body>
+
 </html>
