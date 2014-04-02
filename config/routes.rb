@@ -17,11 +17,19 @@ Campfirehq::Application.routes.draw do
   get 'user/profile' => 'user#profile'
   post 'user/profile' => 'user#profile'
 
+  get 'user/:id/groups' => 'user#groups'
+  get 'user/groups' => 'user#groups'
+
+
+
   get 'user/show/:id' => 'user#show'
 
   get 'post/:id' => 'post#index'
 
   post 'post/create' => 'post#create'
+
+  post 'post/:id/add' => 'post#add'
+
 
 
   get 'group/create' => 'group#create'

@@ -9,7 +9,7 @@ class GroupController < ApplicationController
 	def feed
 
 		# Get the recent activities for the group
-		activities = Group.find(params[:id]).activities.order(created_at: :desc)
+		activities = Group.find(params[:id]).activities
 
 		# Return as a JSON array of activities
 		render :json => activities
@@ -45,10 +45,13 @@ class GroupController < ApplicationController
 
 	def add
 
-		if request.post?
+		# Get the current group
+		@group = Group.find(params[:id])
 
-			# Get the current group
-			@group = Group.find(params[:id])
+		# Get all the users that are not in the group
+		@users = User.all - @group.users
+
+		if request.post?
 
 			# Get the user and add them to the group
 			user_id = params[:user]

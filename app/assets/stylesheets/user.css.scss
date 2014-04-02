@@ -6,13 +6,6 @@
 	margin-top: 10px;
 }
 
-#profile-feed {
-	margin-top: 0px;
-	.feed-item {
-		margin-top: 0px;
-	}
-}
-
 .feed-item {
 
 	margin: 20px 0px;
@@ -28,41 +21,47 @@
 	}
 
 	.feed-body {
+
 		vertical-align: top;
 		display: inline-block;
 		width: 760px;
 		margin-left: 20px;
+	
 		.feed-time {
 			font-size: 0.9em;
 			color: grey;
 		}
+	
 		.feed-content {
-			margin: 5px 0px;
+			margin: 2px 0px 10px;
 		}
+	
 	}
 
 }
 
 #sidebar {
+
+	margin-top: 5px;
 	
 	.sidebar-editprofile {
 		margin: 2px 0px;
 		font-size: 0.9em;
 	}
 
-	.sidebar-actions {
+	#sidebar-groups {
 
-		.sidebar-action {
+		margin: 5px 0px;
+
+		.sidebar-group {
+
 			vertical-align: center;
-			list-style-type: none;
 			padding: 2px 4px;
+
 			&:hover {
 				background-color: #FDFDFD;
 			}
-			i {
-				margin-right: 8px;
-				font-size: 0.9em;
-			}
+
 		}
 
 	}

@@ -7,6 +7,7 @@ class PostController < ApplicationController
 
 		# Now construct a response from the contents of the post
 		response = {}
+		response['id'] = post.id
 		response['name'] = post.user.full_name
 		response['avatar'] = post.user.avatar.url
 		response['content'] = post.content
@@ -33,6 +34,24 @@ class PostController < ApplicationController
 
 		# Render a response as JSON
 		render :json => activity
+
+	end
+
+	def add
+
+		# Get the current post
+		post = Post.find(params[:id])
+
+		# Create a new comment based on the parameters
+		comment = Comment.new(:content => params[:content])
+		comment.user = current_user
+		comment.save
+
+		# Add the comment to the post
+		post.comments << comment
+
+		# Render the comment response as JSON
+		render :json => comment
 
 	end
 

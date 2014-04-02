@@ -109,11 +109,22 @@ class UserController < ApplicationController
 
 	end
 
+	# Retrieve a list of groups that the current user belongs to
+	def groups
+
+		if params[:id]
+
+			render :json => User.find(params[:id]).groups
+
+		else
+
+			render :json => current_user.groups
+
+		end
+
+	end
+
 	def feed
-
-		@activities = Activity.all.order(created_at: :desc)
-
-		@users = User.all
 
 	end
 
