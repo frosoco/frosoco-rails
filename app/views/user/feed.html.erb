@@ -5,8 +5,8 @@
   </div>
   <div id="sidebar" class="col-xs-3">
     <div id="sidebar-profile">
-      <div class="sidebar-name"><strong><a href="/user/show/<%= current_user.id %>"><%= current_user.full_name %></a></strong></div>
-      <div class="sidebar-editprofile"><a href="/user/profile">Edit Profile</a> | <a href="/user/logout">Logout</a></div>
+      <div class="sidebar-name"><strong><a href="/users/show/<%= current_user.id %>"><%= current_user.full_name %></a></strong></div>
+      <div class="sidebar-editprofile"><a href="/users/profile">Edit Profile</a> | <a href="/users/logout">Logout</a></div>
     </div>
     <div id="sidebar-actions">
     </div>
@@ -17,6 +17,8 @@
     </div>
   </div>
 </div>
+
+<!--
 
 <script id="bb-sidebar-profile" type="text/template">
 
@@ -309,3 +311,5 @@ $(function() {
 });
 
 </script>
+
+-->

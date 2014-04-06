@@ -16,7 +16,7 @@ gem 'bootstrap-sass'
 gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+# gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -52,6 +52,9 @@ gem 'font-awesome-sass'
 
 # Backbone.js
 gem 'rails-backbone'
+
+# Relational Backbone.js
+gem 'backbone-relational-rails'
 
 # Use unicorn as the app server
 # gem 'unicorn'

@@ -4,46 +4,48 @@ Campfirehq::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
-  get 'user/feed' => 'user#feed'
+  get 'users/feed' => 'user#feed'
 
-  get 'user/login' => 'user#login'
-  post 'user/login' => 'user#login'
+  get 'users/login' => 'user#login'
+  post 'users/login' => 'user#login'
 
-  get 'user/logout' => 'user#logout'
+  get 'users/logout' => 'user#logout'
 
-  get 'user/register' => 'user#register'
-  post 'user/register' => 'user#register'
+  get 'users/register' => 'user#register'
+  post 'users/register' => 'user#register'
 
-  get 'user/profile' => 'user#profile'
-  post 'user/profile' => 'user#profile'
+  get 'users/profile' => 'user#profile'
+  post 'users/profile' => 'user#profile'
 
-  get 'user/:id/groups' => 'user#groups'
-  get 'user/groups' => 'user#groups'
-
-
-
-  get 'user/show/:id' => 'user#show'
-
-  get 'post/:id' => 'post#index'
-
-  post 'post/create' => 'post#create'
-
-  post 'post/:id/add' => 'post#add'
+  get 'users/:id/groups' => 'user#groups'
+  get 'users/groups' => 'user#groups'
 
 
 
-  get 'group/create' => 'group#create'
-  post 'group/create' => 'group#create'
+  get 'users/show/:id' => 'user#show'
 
-  get 'group/:id' => 'group#index'
+  get 'posts/:id' => 'post#index'
+  put 'posts/:id' => 'post#update'
 
-  get 'group/:id/feed' => 'group#feed'
 
-  get 'group/:id/modify' => 'group#modify'
-  post 'group/:id/modify' => 'group#modify'
+  post 'posts/create' => 'post#create'
 
-  get 'group/:id/add' => 'group#add'
-  post 'group/:id/add' => 'group#add'
+  post 'posts/:id/add' => 'post#add'
+
+
+
+  get 'groups/create' => 'group#create'
+  post 'groups/create' => 'group#create'
+
+  get 'groups/:id' => 'group#index'
+
+  get 'groups/:id/feed' => 'group#feed'
+
+  get 'groups/:id/modify' => 'group#modify'
+  post 'groups/:id/modify' => 'group#modify'
+
+  get 'groups/:id/add' => 'group#add'
+  post 'groups/:id/add' => 'group#add'
 
 
 

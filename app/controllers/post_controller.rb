@@ -37,6 +37,24 @@ class PostController < ApplicationController
 
 	end
 
+	def update
+
+		puts params
+
+		# Get the post element
+		post = Post.find(params[:id])
+
+		# Change the items
+		post.content = params[:content]
+
+		# Save the post
+		post.save
+
+		# Say that everything is OK
+		head :ok
+
+	end
+
 	def add
 
 		# Get the current post

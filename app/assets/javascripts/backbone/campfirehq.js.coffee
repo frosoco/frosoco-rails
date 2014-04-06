@@ -5,7 +5,7 @@
 #= require_tree ./routers
 
 window.Campfirehq =
-  Models: {}
+  Models: { }
   Collections: {}
   Routers: {}
   Views: {}
