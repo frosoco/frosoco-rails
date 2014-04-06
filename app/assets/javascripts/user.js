@@ -2,4 +2,4 @@
 // All this logic will automatically be available in application.js.
 // You can use CoffeeScript in this file: http://coffeescript.org/
 
-var foo = new PostView;
+var App = new AppView;

@@ -2,7 +2,11 @@ class GroupController < ApplicationController
 
 	def index
 
-		@group = Group.find(params[:id])
+		# Get the recent activities for the group
+		posts = Group.find_by_identifier(params[:identifier]).posts
+
+		# Return as a JSON array of activities
+		render :json => posts
 
 	end
 
@@ -28,7 +32,7 @@ class GroupController < ApplicationController
 				group = Group.new(:name => name, :identifier => identifier)
 				group.save
 
-				redirect_to :action => 'add', :id => group.id
+				redirect_to :action => 'add', :identifier => group.identifier
 
 			end
 
@@ -46,7 +50,7 @@ class GroupController < ApplicationController
 	def add
 
 		# Get the current group
-		@group = Group.find(params[:id])
+		@group = Group.find_by_identifier(params[:identifier])
 
 		# Get all the users that are not in the group
 		@users = User.all - @group.users

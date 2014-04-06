@@ -3,7 +3,7 @@
 
 <strong>Add Users</strong>
 <div>
-<%= form_tag("/group/" + @group.id.to_s + "/add", method: "post") do %>
+<%= form_tag("/groups/" + @group.identifier + "/add", method: "post") do %>
 <select name="user">
 <% @users.each do |user| %>
 	<option value="<%= user.id %>"><%= user.full_name %></option>

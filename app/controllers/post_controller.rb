@@ -3,18 +3,28 @@ class PostController < ApplicationController
 	def index
 
 		# Get the correct post
-		post = Post.find(params[:id])
-
-		# Now construct a response from the contents of the post
-		response = {}
-		response['id'] = post.id
-		response['name'] = post.user.full_name
-		response['avatar'] = post.user.avatar.url
-		response['content'] = post.content
-		response['timestamp'] = post.created_at
+		post = Post.includes(:user).find(params[:id])
 
 		# Render the JSON of the post
-		render :json => response
+		render :json => post, :include => :user
+
+	end
+
+	def update
+
+		puts params
+
+		# Get the post element
+		post = Post.find(params[:id])
+
+		# Change the items
+		post.content = params[:content]
+
+		# Save the post
+		post.save
+
+		# Say that everything is OK
+		head :ok
 
 	end
 
@@ -34,24 +44,6 @@ class PostController < ApplicationController
 
 		# Render a response as JSON
 		render :json => activity
-
-	end
-
-	def update
-
-		puts params
-
-		# Get the post element
-		post = Post.find(params[:id])
-
-		# Change the items
-		post.content = params[:content]
-
-		# Save the post
-		post.save
-
-		# Say that everything is OK
-		head :ok
 
 	end
 

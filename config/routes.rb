@@ -37,15 +37,13 @@ Campfirehq::Application.routes.draw do
   get 'groups/create' => 'group#create'
   post 'groups/create' => 'group#create'
 
-  get 'groups/:id' => 'group#index'
-
-  get 'groups/:id/feed' => 'group#feed'
+  get 'groups/:identifier' => 'group#index'
 
   get 'groups/:id/modify' => 'group#modify'
   post 'groups/:id/modify' => 'group#modify'
 
-  get 'groups/:id/add' => 'group#add'
-  post 'groups/:id/add' => 'group#add'
+  get 'groups/:identifier/add' => 'group#add'
+  post 'groups/:identifier/add' => 'group#add'
 
 
 

@@ -1,32 +1,32 @@
-$.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-  var token;
-  options.xhrFields = {
-    withCredentials: true
-  };
-  token = $('meta[name="csrf-token"]').attr('content');
-  if (token) {
-    return jqXHR.setRequestHeader('X-CSRF-Token', token);
-  }
-});
-
 var PostView = Backbone.View.extend({
+
+    template: _.template($('#template-post').html()),
 
     initialize: function() {
 
 	  	// Get a pointer to the parent object
 	    var _this = this;
 
-	    var post = new Post({
-	    	id: 1
+	    // Set the model for this view
+	    this.model = new Post();
+
+	    // Set the URL for the model
+	    this.model.url = '/posts/' + this.options.post
+
+	    // Fetch from the model
+	    this.model.fetch({
+	    	success: function() {
+				_this.render();
+	    	}
 	    });
 
-	    post.fetch();
+	},
 
-	    post.set({"content": "The content has now changed."});
+	render: function() {
+	
+		console.log(this.model);
 
-	    console.log(post);
-
-	    post.save();
+		$('#feed-items').prepend(this.template(this.model.attributes));
 
 	}
 
