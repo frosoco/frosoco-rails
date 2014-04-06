@@ -28,7 +28,7 @@ Campfirehq::Application.routes.draw do
   put 'posts/:id' => 'post#update'
 
 
-  post 'posts/create' => 'post#create'
+  post 'posts' => 'post#create'
 
   post 'posts/:id/add' => 'post#add'
 

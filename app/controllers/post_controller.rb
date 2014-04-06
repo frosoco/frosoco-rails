@@ -30,20 +30,13 @@ class PostController < ApplicationController
 
 	def create
 
-		# Get the corresponding group
-		group = Group.find(params[:group])
-
-		# Create and save the post
-		post = Post.new(:content => params[:content])
+		# Create a new post
+		post = Post.new(:content => params[:content], :group_id => params[:group_id])
 		post.user = current_user
 		post.save
 
-		# Then add it to the news feed
-		activity = Activity.new(:content_type => 'post', :content_id => post.id, :group_id => group.id)
-		activity.save
-
-		# Render a response as JSON
-		render :json => activity
+		# Say that everything is OK
+		render :json => post
 
 	end
 

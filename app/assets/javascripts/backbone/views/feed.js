@@ -6,7 +6,7 @@ var FeedView = Backbone.View.extend({
 
 	events: {
 
-
+		'submit #add-post': 'addPost'
 
 	},
 
@@ -18,8 +18,17 @@ var FeedView = Backbone.View.extend({
 		// Create an postCollection for the feed
 		this.postCollection = new PostCollection();
 
+		// Set up a listener on the post collection
+		this.postCollection.on('add', function(model) {
+
+			var postView = new PostView({
+				post: model.id
+			});
+
+		});
+
 		// Set the URL for the collection
-		this.postCollection.url = '/groups/' + this.options.group;
+		this.postCollection.url = '/groups/' + this.options.identifier;
 
 		// Render the feed wrapper
 		this.render();
@@ -51,5 +60,39 @@ var FeedView = Backbone.View.extend({
       $(this.el).html(this.template(this.options));
 
 	},
+
+	addPost: function(e) {
+
+		// Reference to the parent object
+		var _this = this;
+
+		// Get the content from the text box
+		var content = $('#add-post-content').val(); 
+
+		// Create a Post object
+		var post = new Post({
+			group_id: this.options.group,
+			content: content
+		});
+
+		// Save the post
+		post.save(null, {
+
+			success: function(model, response) {
+
+				// Add it to the collection
+				_this.postCollection.add(post);	
+
+			},
+
+			error: function(model, response) {
+			}
+
+		});
+
+		// Prevent the default submit action
+    	e.preventDefault();
+
+	}
 
 });

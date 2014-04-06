@@ -3,7 +3,7 @@ class GroupController < ApplicationController
 	def index
 
 		# Get the recent activities for the group
-		posts = Group.find_by_identifier(params[:identifier]).posts
+		posts = Group.find_by_identifier(params[:identifier]).posts.order(created_at: :desc)
 
 		# Return as a JSON array of activities
 		render :json => posts

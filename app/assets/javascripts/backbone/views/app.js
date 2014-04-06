@@ -17,15 +17,17 @@ var AppView = Backbone.View.extend({
 
 	loadGroup: function(e) {
 
+		// Unbind old events if they exist
+		$('#feed').off('submit', '#add-post');
+
 	    // Get the target
 	    var id = e.target.getAttribute('group-id');
-
-	    // Set the app group ID
-	    this.group = id;
+	    var identifier = e.target.getAttribute('group-identifier');
 
 	    // Create the feedView
 	    this.feedView = new FeedView({
-	    	group: this.group
+	    	group: id,
+	    	identifier: identifier
 	    });
 
 	}
