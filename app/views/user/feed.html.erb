@@ -36,11 +36,17 @@
     <div class="feed-content"><%%= content %></div>
     <div class="feed-social">
       <div id="post-<%%= id %>-comments"></div>
-      <form class="add-comment" post-id="<%%= id %>" action="/posts/<%%= id %>/add" method="post">
+      <form id="post-<%%= id%>-comment" action="/posts/<%%= id %>" method="post" post-id="<%%= id %>" >
         <input class="form-control" id="post-<%%= id %>" type="text" placeholder="Add a comment" />
       </form>
     </div>
   </div>
+</div>
+</script>
+
+<script id="template-comment" type="text/template">
+<div class="feed-comment" id="comment-<%%= id %>">
+  <%%= comment %>
 </div>
 </script>
 

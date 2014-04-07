@@ -21,17 +21,30 @@ var FeedView = Backbone.View.extend({
 		// Set up a listener on the post collection
 		this.postCollection.on('add', function(model) {
 
+			var el = 'div#post-' + model.id;
+
 			var postView = new PostView({
-				post: model.id
+				post: model.id,
+				el: el
 			});
 
 		});
-
+		
 		// Set the URL for the collection
 		this.postCollection.url = '/groups/' + this.options.identifier;
 
 		// Render the feed wrapper
 		this.render();
+
+	},
+
+	render: function() {
+
+		// Get a pointer to the parent object
+		var _this = this;
+
+		// Render the actual template
+		$(this.el).html(this.template(this.options));
 
 		// Fetch from the URL
 		this.postCollection.fetch({
@@ -43,8 +56,12 @@ var FeedView = Backbone.View.extend({
 					// Fetch the model by its index
 					var model = _this.postCollection.models[index];
 
+					// el for the target
+					var el = 'div#post-' + model.id;
+
 					var postView = new PostView({
 						post: model.id,
+						el: el
 					});
 
 				}
@@ -52,12 +69,6 @@ var FeedView = Backbone.View.extend({
 			}
 
 		});
-
-	},
-
-	render: function() {
-
-      $(this.el).html(this.template(this.options));
 
 	},
 

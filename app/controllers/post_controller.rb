@@ -58,4 +58,14 @@ class PostController < ApplicationController
 
 	end
 
+	def comments
+
+		# Get all the comments 
+		comments = Post.find(params[:id]).comments
+
+		# Return as JSON
+		render :json => comments
+
+	end
+
 end

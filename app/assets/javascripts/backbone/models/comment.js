@@ -1,6 +1,6 @@
-var Comment = Backbone.RelationalModel.extend({
+var Comment = Backbone.Model.extend({
 
-	urlRoot: '/comment/'
+	urlRoot: '/comments/'
 
 });
 

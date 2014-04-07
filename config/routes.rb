@@ -32,7 +32,7 @@ Campfirehq::Application.routes.draw do
 
   post 'posts/:id/add' => 'post#add'
 
-
+  get 'posts/:id/comments' => 'post#comments'
 
   get 'groups/create' => 'group#create'
   post 'groups/create' => 'group#create'
